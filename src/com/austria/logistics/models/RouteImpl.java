@@ -1,9 +1,7 @@
 package com.austria.logistics.models;
 
 import com.austria.logistics.constants.Constants;
-import com.austria.logistics.exceptions.InvalidLocationRouteException;
-import com.austria.logistics.exceptions.LocationNotFoundException;
-import com.austria.logistics.exceptions.RouteIsEmptyException;
+import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
@@ -25,16 +23,25 @@ public class RouteImpl implements Route {
     public int getId() {
         return this.id;
     }
-
+    ////////////Probably will rework the 2 methods below
+    @Override
+    public String addFirstLocationToRoute(Locations location, LocalDateTime eventTime) {
+        if(!this.route.isEmpty()){
+            throw new RouteIsNotEmptyException(String.format(Constants.ROUTE_IS_NOT_EMPTY_MESSAGE,this.getId()));
+        }
+        this.route.add(new LocationImpl(location,eventTime));
+        return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
+    }
 
     @Override
-    public String addLocationToRoute(Locations location, LocalDateTime eventTime) {
+    public String addLocationToRoute(Locations location) {
         if (!this.isRouteEmpty() && route.getLast().getLocation() == location) {
             throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getCityName()));
         }
-        route.add(new LocationImpl(location, eventTime));
+        route.add(new LocationImpl(location));
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
     }
+    ////////////
 
     @Override
     public boolean containsLocation(Locations location) {
@@ -75,7 +82,7 @@ public class RouteImpl implements Route {
 
     @Override
     public boolean isRouteEmpty() {
-        return this.route.size() == 0;
+        return this.route.isEmpty();
     }
 
     //THIS CAN THROW EXCEPTION IF THE ROUTE LIST IS EMPTY, HAVE TO DECIDE WHERE TO HANDLE IT
@@ -111,7 +118,25 @@ public class RouteImpl implements Route {
         for (int i = startIndex; i < endIndex; i++) {
             distance += Distance.calculateDistance(this.route.get(i).getLocation(), this.route.get(i + 1).getLocation());
         }
-
         return distance;
     }
+
+    @Override
+    public void calculateSchedule() {
+        if(this.route.size() < 2){
+            throw new RouteNotEnoughLocationsException(String.format(Constants.ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE, this.getId()));
+        }
+
+        LocalDateTime prevTime = this.route.getFirst().getEventTime();
+        Location prevLocation = this.route.getFirst();
+
+        for (int i = 1; i < this.route.size(); i++) {
+            Location currentLocation = this.route.get(i);
+            long minutes = Math.round((Distance.calculateDistance(prevLocation.getLocation(),currentLocation.getLocation()) / Constants.AVERAGE_SPEED_KMH) * 60);
+            prevTime = prevTime.plusMinutes(minutes);
+            currentLocation.setEventTime(prevTime);
+            prevLocation = currentLocation;
+        }
+    }
+
 }
