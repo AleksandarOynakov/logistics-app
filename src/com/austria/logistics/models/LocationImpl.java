@@ -14,7 +14,6 @@ public class LocationImpl implements Location {
         this.setLocation(location);
     }
 
-
     public LocationImpl(Locations location, LocalDateTime eventTime){
         this.setLocation(location);
         this.setEventTime(eventTime);

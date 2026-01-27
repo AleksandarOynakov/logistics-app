@@ -5,10 +5,16 @@ public class Constants {
     public static final String LOCATION_NOT_FOUND_MESSAGE = "%s is not in the route.";
     public static final String LOCATION_ADDED_MESSAGE = "%s is successfully added to route with id %d ";
     public static final String LOCATION_REMOVED_MESSAGE = "%s is successfully removed from route with id %d ";
-    public static final String ROUTE_IS_EMPTY_MESSAGE = "Route with id %d doesn't contain any locations yet.";
     public static final String LOCATION_ROUTE_INVALID_MESSAGE = "Route with id %d doesn't contain path from %s to %s";
     public static final String LOCATION_PREVIOUS_IS_SAME_MESSAGE = "Route with id %d already has %s as last stop.";
+
+    public static final String ROUTE_IS_EMPTY_MESSAGE = "Route with id %d doesn't contain any locations yet.";
+    public static final String ROUTE_IS_NOT_EMPTY_MESSAGE = "Route with id %d already contains location with depart time(starting location)";
+    public static final String ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE = "Route with id %d doesn't contain enough locations to calculate schedule. ";
+
     public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
+
+    public static final double AVERAGE_SPEED_KMH = 87;
 
     public static final int[][] distances = {
             {   0,  877, 1376, 2762,  909, 3935, 4016 },
