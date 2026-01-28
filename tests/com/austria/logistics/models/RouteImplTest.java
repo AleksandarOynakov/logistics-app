@@ -267,11 +267,16 @@ class RouteImplTest {
         //Arange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         route.addLocationToRoute(Locations.ADL);
-        LocalDateTime expectedArrival = LocalDateTime.of(2026, 1, 25, 10, 9);
+        route.addLocationToRoute(Locations.BRI);
+        LocalDateTime expectedArrival1 = LocalDateTime.of(2026, 1, 25, 10, 9);
+        LocalDateTime expectedArrival2 = LocalDateTime.of(2026, 1, 26, 8, 18);
+
+
         route.calculateSchedule();
 
         //Act, Assert
-        assertEquals(expectedArrival, route.getRoute().get(1).getEventTime());
+        assertEquals(expectedArrival1, route.getRoute().get(1).getEventTime());
+        assertEquals(expectedArrival2, route.getRoute().get(2).getEventTime());
     }
 
 }
