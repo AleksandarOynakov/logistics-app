@@ -23,7 +23,7 @@ public class RouteImpl implements Route {
     public int getId() {
         return this.id;
     }
-    ////////////Probably will rework the 2 methods below
+
     @Override
     public String addFirstLocationToRoute(Locations location, LocalDateTime eventTime) {
         if(!this.route.isEmpty()){
@@ -43,19 +43,14 @@ public class RouteImpl implements Route {
         route.add(new LocationImpl(location));
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
     }
-    ////////////
+
 
     @Override
     public boolean containsLocation(Locations location) {
-        for (Location element : this.route) {
-            if (element.getLocation() == location) {
-                return true;
-            }
-        }
-        return false;
+        return this.route.stream().anyMatch(locationElement -> locationElement.getLocation() == location);
     }
 
-    //THIS CAN THROW EXCEPTION IF LOCATION IS NOT FOUND, HAVE TO DECIDE WHERE TO HANDLE IT
+
     @Override
     public Location findByCity(Locations location) {
         if (this.containsLocation(location)) {
@@ -68,7 +63,7 @@ public class RouteImpl implements Route {
         throw new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getCityName()));
     }
 
-    //THIS CAN THROW EXCEPTION IF LOCATION IS NOT FOUND, HAVE TO DECIDE WHERE TO HANDLE IT
+
     @Override
     public String removeLocationFromRoute(Locations location) {
         Location locationToRemove = this.findByCity(location);
@@ -87,7 +82,7 @@ public class RouteImpl implements Route {
         return this.route.isEmpty();
     }
 
-    //THIS CAN THROW EXCEPTION IF THE ROUTE LIST IS EMPTY, HAVE TO DECIDE WHERE TO HANDLE IT
+
     @Override
     public int calculateTotalDistance() {
         if (!this.isRouteEmpty()) {
@@ -105,7 +100,7 @@ public class RouteImpl implements Route {
         throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_MESSAGE, this.getId()));
     }
 
-    //THIS CAN THROW EXCEPTION IF CITIES ARE NOT FOUND OR ENDINDEX IS BEFORE STARTINDEX, HAVE TO DECIDE WHERE TO HANDLE IT
+
     @Override
     public int calculateDistanceBetween(Locations startLocation, Locations endLocation) {
         int distance = 0;

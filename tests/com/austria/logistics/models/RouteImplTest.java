@@ -22,31 +22,23 @@ class RouteImplTest {
     @BeforeEach
     void before() {route = new RouteImpl(1);}
 
-
     @Test
-    void getId() {
-        //Arrange
-        Route route1 = new RouteImpl(2);
-        Route route2 = new RouteImpl(3);
-
-        //Act,Assert
-        assertAll(
-                () -> assertEquals(2, route1.getId()),
-                () -> assertEquals(3, route2.getId())
-        );
+    public void constructor_Should_InitializeRoute_When_ArgumentsAreValid() {
+        //Arrange,Act,Assert
+        Assertions.assertEquals(0, new RouteImpl(1).getRoute().size());
     }
 
     @Test
     void addFirstLocationToRoute_Should_ThrowException_When_Route_isNotEmpty(){
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         //Act, Assert
         Assertions.assertThrows(RouteIsNotEmptyException.class,() ->  route.addFirstLocationToRoute(Locations.DAR,FIXED_TIME));
     }
 
     @Test
-    void addFirstLocationToRoute(){
-        //Arange
+    void addFirstLocationToRoute_When_ArgumentsAreValid(){
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         //Act, Assert
         assertAll(
@@ -58,14 +50,14 @@ class RouteImplTest {
 
     @Test
     void addLocationToRoute_Should_ThrowException_When_Adding_AsFirst_Location() {
-        //Arange, Act, Assert
+        //Arrange, Act, Assert
         Assertions.assertThrows(RouteIsEmptyException.class,() -> route.addLocationToRoute(Locations.DAR));
     }
 
 
    @Test
-    void addLocationToRoute() {
-        //Arange
+    void addLocationToRoute_When_ArgumentsAreValid() {
+        //Arrange
         route.addFirstLocationToRoute(Locations.DAR,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
 
@@ -78,7 +70,7 @@ class RouteImplTest {
 
     @Test
     void addLocationToRoute_Should_ThrowException_When_Previous_Location_is_Same() {
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
 
         //Act,Assert
@@ -88,18 +80,18 @@ class RouteImplTest {
 
     @Test
     void containsLocation() {
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.ADL,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
 
         //Act,Assert
-        assertEquals(true,route.containsLocation(Locations.BRI));
-        assertEquals(false, route.containsLocation(Locations.DAR));
+        assertTrue(route.containsLocation(Locations.BRI));
+        assertFalse(route.containsLocation(Locations.DAR));
     }
 
     @Test
-    void findByCity() {
-        //Arange
+    void findByCity_Should_ReturnEnum_When_LocationExist() {
+        //Arrange
         route.addFirstLocationToRoute(Locations.ASP,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
         route.addLocationToRoute(Locations.DAR);
@@ -111,7 +103,7 @@ class RouteImplTest {
 
     @Test
     void findByCity_Should_ThrowException_When_NotFound() {
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.DAR,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
 
@@ -120,8 +112,8 @@ class RouteImplTest {
     }
 
     @Test
-    void removeLocationFromRoute() {
-        //Arange
+    void removeLocationFromRoute_Should_RemoveLocation_FromRoute_When_LocationExist() {
+        //Arrange
         route.addFirstLocationToRoute(Locations.ASP,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
         route.addLocationToRoute(Locations.DAR);
@@ -133,8 +125,8 @@ class RouteImplTest {
     }
 
     @Test
-    void removeLocationFromRoute_Should_ThrowException_When_NotFound() {
-        //Arange
+    void removeLocationFromRoute_Should_ThrowException_When_LocationNotFound() {
+        //Arrange
         route.addFirstLocationToRoute(Locations.DAR,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
 
@@ -195,7 +187,7 @@ class RouteImplTest {
     }
 
     @Test
-    void calculateTotalDistance() {
+    void calculateTotalDistance_Should_CalculateTotalDistance_When_ThereAreLocations_InTheRoute() {
         // Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         route.addLocationToRoute(Locations.DAR);
@@ -215,8 +207,8 @@ class RouteImplTest {
     }
 
     @Test
-    void calculateDistanceBetween() {
-        //Arange
+    void calculateDistanceBetween_Should_CalculateDistance_When_LegalLocationsAre_Passed() {
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         route.addLocationToRoute(Locations.DAR);
         route.addLocationToRoute(Locations.ADL);
@@ -233,7 +225,7 @@ class RouteImplTest {
 
     @Test
     void calculateDistanceBetween_Should_ThrowException_When_Locations_NotFound() {
-        // Arange, Act, Assert
+        // Arrange, Act, Assert
         Assertions.assertThrows(LocationNotFoundException.class, () -> route.calculateDistanceBetween(Locations.BRI,Locations.ADL));
     }
 
@@ -249,13 +241,13 @@ class RouteImplTest {
     }
     @Test
     void calculateSchedule_Should_ThrowException_When_Route_isEmpty(){
-        //Arange, Act, Assert
+        //Arrange, Act, Assert
         Assertions.assertThrows(RouteNotEnoughLocationsException.class, () -> route.calculateSchedule());
     }
 
     @Test
     void calculateSchedule_Should_ThrowException_When_NotEnough_Locations(){
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
 
         //Act, Assert
@@ -264,7 +256,7 @@ class RouteImplTest {
 
     @Test
     void calculateSchedule_Should_Calculate_CorrectTime(){
-        //Arange
+        //Arrange
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         route.addLocationToRoute(Locations.ADL);
         route.addLocationToRoute(Locations.BRI);
