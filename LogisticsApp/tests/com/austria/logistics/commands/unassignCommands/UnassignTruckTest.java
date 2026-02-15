@@ -118,7 +118,7 @@ class UnassignTruckTest {
         //Arrange
         repository.login(user);
         //Act,Assert
-        Assertions.assertEquals("Truck Man with id 1011 is successfully unassigned to route with id 1",
+        Assertions.assertEquals("Truck Man with id 1011 is successfully unassigned from route with id 1",
                 unassignTruck.execute(List.of("1011", "1")));
 
     }
