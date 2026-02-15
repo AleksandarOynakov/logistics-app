@@ -208,7 +208,7 @@ Register <Username> <FirstName> <LastName> <Password> <Email> [UserRole]
 | Username  | Yes      | Unique username used for authentication |
 | FirstName | Yes      | User first name |
 | LastName  | Yes      | User last name |
-| Password  | Yes      | User password (stored and validated by the system) |
+| Password  | Yes      | User password  |
 | Email     | Yes      | Valid email address used for contact and mailbox |
 | UserRole  | Optional | Defines user permissions: CUSTOMER (default), EMPLOYEE, or MANAGER |
 If no UserRole is provided, the system assigns CUSTOMER by default.
