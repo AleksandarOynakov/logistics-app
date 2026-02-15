@@ -77,7 +77,7 @@ CreatePackage <StartLocation> <EndLocation> <Weight> <ContactInfo>
 | StartLocation | String | Departure city |
 | EndLocation   | String | Destination city |
 | Weight        | String | Package weight |
-| ContactInfo   | String | Contact email or information |
+| ContactInfo   | String | Contact email |
 
 ---
 
