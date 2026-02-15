@@ -98,6 +98,11 @@ Deletes route
 ```
  DeleteRoute <RouteId> 
 ```
+### `DeletePackage`
+Deletes unassigned package
+```
+ DeletePackage <PackageId> 
+```
 
 ---
 
@@ -305,6 +310,7 @@ Can execute all operational logistics commands, including:
 - `UnassignTruck`
 - `UnassignPackage`
 - `DeleteRoute`
+- `DeletePackage`
 - `ShowRoute`
 - `ShowRoutes`
 - `ShowPackage`
@@ -414,6 +420,21 @@ Login john 123456
 ReadMail
 Logout
 Login emp1 emp123
+ShowRoutes
+CreatePackage Melbourne Darwin 100 test@test.bg
+ShowPackages
+ShowRoute 3
+AssignLocation 3 Darwin
+AssignTruck 3 SCANIA
+AssignPackage 4 1001
+DeletePackage 3
+DeletePackage 4
+UnassignPackage 4
+DeletePackage 4
+ShowRoute 3
+DeleteRoute 3
+UnassignTruck 1001 3
+DeleteRoute 3
 ShowRoutes
 Exit
 ```
@@ -565,5 +586,43 @@ Current schedule for route with id 3:
 No assigned truck to the route.
 City: Melbourne, Scheduled time: Feb 24 16:00
 ####################
+Package with id 4 was created!
+####################
+Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is not assigned to a truck yet.
+Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
+Package with id 4, start location Melbourne, end location Darwin, weight 100, contact info test@test.bg is not assigned to a truck yet.
+####################
+Current schedule for route with id 3:
+No assigned truck to the route.
+City: Melbourne, Scheduled time: Feb 24 16:00
+####################
+Darwin is successfully added to route with id 3 .
+####################
+Truck Scania with id 1001 was assigned to route with id 3!
+####################
+Package with id 4 was assigned to truck Scania with id 1001!
+####################
+No record with id 3 in the repository
+####################
+Package cannot be delete while it is assigned to truck!
+####################
+Package with id 4 is successfully unassigned!
+####################
+Package with id 4 was successfully deleted!
+####################
+Current schedule for route with id 3:
+The route has assigned truck Scania with id 1001.
+City: Melbourne, Scheduled time: Feb 24 16:00
+City: Darwin, Scheduled time: Feb 26 11:08
+####################
+Route cannot be delete while it has assigned truck to it!
+####################
+Truck Scania with id 1001 is successfully unassigned to route with id 3
+####################
+Route with id 3 was successfully deleted!
+####################
+No routes are created yet!
+####################
 Process finished with exit code 0
+
 ```
