@@ -187,6 +187,11 @@ ShowPackage <PackageId>
 ```
 ShowPackages
 ```
+### `ShowTruck`
+```
+
+ShowTruck <TruckId>
+```
 
 ### `ShowTrucks`
 ```
@@ -294,6 +299,7 @@ Can execute all operational logistics commands, including:
 - `ShowRoutes`
 - `ShowPackage`
 - `ShowPackages`
+- `ShowTruck`
 - `ShowTrucks`
 
 Employees cannot:
@@ -372,6 +378,7 @@ AssignPackage 1 1001
 AssignPackage 2 1001
 ShowUsers
 ShowRoute 3
+ShowTruck 1001
 ShowPackages
 ShowTrucks
 ShowPackage 1
@@ -448,6 +455,8 @@ Current schedule for route with id 3:
 The route has assigned truck Scania with id 1001.
 City: Sydney, Scheduled time: Feb 20 13:00
 City: Darwin, Scheduled time: Feb 22 10:14
+####################
+Scania with id 1001 is assigned to route with id 3, current weight is 20 kg and max capacity is 42000 kg
 ####################
 Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is assigned to truck Scania with id 1001. Estimated arrival time is: Feb 22 10:14
 Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
