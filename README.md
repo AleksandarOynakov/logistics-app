@@ -551,7 +551,7 @@ No record with id 999 in the repository
 ####################
 Package with id 1 is successfully unassigned!
 ####################
-Truck Scania with id 1001 is successfully unassigned to route with id 3
+Truck Scania with id 1001 is successfully unassigned from route with id 3
 ####################
 Truck Scania with id 1001 is not assigned to route with id 3
 ####################
@@ -617,7 +617,7 @@ City: Darwin, Scheduled time: Feb 26 11:08
 ####################
 Route cannot be delete while it has assigned truck to it!
 ####################
-Truck Scania with id 1001 is successfully unassigned to route with id 3
+Truck Scania with id 1001 is successfully unassigned from route with id 3
 ####################
 Route with id 3 was successfully deleted!
 ####################
