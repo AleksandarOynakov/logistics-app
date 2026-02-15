@@ -26,7 +26,7 @@ public class UnassignLocation extends BaseCommand {
     //EXPECTED STRING ROUTE ID AND STRING CITY
     @Override
     protected String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);

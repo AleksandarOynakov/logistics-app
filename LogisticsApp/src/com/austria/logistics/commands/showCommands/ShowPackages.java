@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ShowPackages extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
+    private final Repository repo = getRepository();
 
     public ShowPackages(Repository repository) {
         super(repository);
@@ -21,7 +22,7 @@ public class ShowPackages extends BaseCommand {
     //NO ARGUMENTS ARE EXPECTED
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -34,7 +35,7 @@ public class ShowPackages extends BaseCommand {
 
     private String showPackages() {
         StringBuilder output = new StringBuilder();
-        List<Package> packages = getRepository().getPackages();
+        List<Package> packages = repo.getPackages();
         if (!packages.isEmpty()) {
             packages.forEach(pkg ->
                     output.append(pkg.toString()).append(System.lineSeparator()));

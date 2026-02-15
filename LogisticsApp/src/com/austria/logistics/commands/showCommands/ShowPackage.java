@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ShowPackage extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-
+    private final Repository repo = getRepository();
     public ShowPackage(Repository repository) {
         super(repository);
     }
@@ -22,7 +22,7 @@ public class ShowPackage extends BaseCommand {
     //EXPECTED STRING PACKAGE ID
     @Override
     protected String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -35,8 +35,6 @@ public class ShowPackage extends BaseCommand {
     }
 
     private String showPackage(int pkgId) {
-        Repository repo = getRepository();
-
         Package pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
         User userToReceiveEmail = repo.findUserByEmail(pkgToPrint.getContactInformation());
 

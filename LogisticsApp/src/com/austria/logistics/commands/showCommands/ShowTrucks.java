@@ -11,6 +11,7 @@ import com.austria.logistics.models.vehicles.contracts.Truck;
 import java.util.List;
 
 public class ShowTrucks extends BaseCommand {
+    private final Repository repo = getRepository();
 
     public ShowTrucks(Repository repository) {
         super(repository);
@@ -19,7 +20,7 @@ public class ShowTrucks extends BaseCommand {
     //NO ARGUMENTS ARE EXPECTED
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -30,7 +31,7 @@ public class ShowTrucks extends BaseCommand {
 
     private String showTrucks() {
         StringBuilder output = new StringBuilder();
-        List<Truck> trucks = getRepository().getTrucks();
+        List<Truck> trucks = repo.getTrucks();
 
         trucks.forEach(truck -> {
             output.append(truck.getTruckType().getDisplayName())

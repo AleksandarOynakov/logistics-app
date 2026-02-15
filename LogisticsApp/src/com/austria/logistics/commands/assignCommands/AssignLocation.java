@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AssignLocation extends BaseCommand {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY = 5;
-    public static final int MIN_ARGUMENTS_COUNT = 2;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY = 5;
+    private static final int MIN_ARGUMENTS_COUNT = 2;
+    private final Repository repo = getRepository();
 
     public AssignLocation(Repository repository) {
         super(repository);
@@ -27,7 +28,7 @@ public class AssignLocation extends BaseCommand {
     //ASSIGNING ANY OTHER LOCATION EXPECTS STRING ROUTE ID AND STRING CITY
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -37,7 +38,7 @@ public class AssignLocation extends BaseCommand {
 
         Validators.validateArgumentsCount(parameters, MIN_ARGUMENTS_COUNT);
         int routeId = Parsers.parseToInteger("Route id", parameters.get(0));
-        Route route = getRepository().findElementById(getRepository().getRoutes(), routeId);
+        Route route = repo.findElementById(repo.getRoutes(), routeId);
         CityName location = Parsers.parseLocation(parameters.get(1));
 
         if (route.isRouteEmpty() && parameters.size() > MIN_ARGUMENTS_COUNT) {

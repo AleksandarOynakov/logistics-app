@@ -15,6 +15,7 @@ import java.util.List;
 
 public class UnassignTruck extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private final Repository repo = getRepository();
 
     public UnassignTruck(Repository repository) {
         super(repository);
@@ -23,8 +24,7 @@ public class UnassignTruck extends BaseCommand {
     //EXPECTED STRING TRUCK ID AND STRING ROUTE ID
     @Override
     protected String executeCommand(List<String> parameters) {
-        Repository repo = getRepository();
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -40,7 +40,7 @@ public class UnassignTruck extends BaseCommand {
     }
 
     private String unassignTruck(Truck truck, Route route) {
-        getRepository().unassignTruckFromRoute(truck, route);
+        repo.unassignTruckFromRoute(truck, route);
 
         return String.format(Constants.TRUCK_SUCCESSFULLY_UNASSIGNED_FROM_ROUTE,
                 truck.getTruckType().getDisplayName(),

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Register extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
+    private final Repository repo = getRepository();
 
     public Register(Repository repository) {
         super(repository);
@@ -21,8 +22,8 @@ public class Register extends BaseCommand {
     //EXPECTED USERNAME,FIRSTNAME,LASTNAME,PASSWORD,EMAIL AND USER ROLE(OPTIONAL)
     @Override
     protected String executeCommand(List<String> parameters) {
-        if (getRepository().hasLoggedUser()) {
-            return String.format(Constants.USER_LOGGED_IN_ALREADY, getRepository().getLoggedUser().getUsername());
+        if (repo.hasLoggedUser()) {
+            return String.format(Constants.USER_LOGGED_IN_ALREADY, repo.getLoggedUser().getUsername());
         }
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
@@ -39,7 +40,6 @@ public class Register extends BaseCommand {
     }
 
     private String register(String username, String firstName, String lastName, String password, String email, UserRole userRole) {
-        Repository repo = getRepository();
 
         if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(username))) {
             throw new UserAlreadyExistsException(String.format(Constants.USER_ALREADY_EXIST, username));

@@ -1,10 +1,9 @@
-package com.austria.logistics.commands.unassignCommands;
+package com.austria.logistics.commands.showCommands;
 
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.NotLoggedInException;
-import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
@@ -13,15 +12,15 @@ import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class UnassignPackage extends BaseCommand {
+public class ShowTruck extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-    private Repository repo = getRepository();
+    private final Repository repo = getRepository();
 
-    public UnassignPackage(Repository repository) {
+    public ShowTruck(Repository repository) {
         super(repository);
     }
 
-    //EXPECTED STRING PACKAGE ID
+    //EXPECTED STRING TRUCK ID
     @Override
     protected String executeCommand(List<String> parameters) {
         User loggedUser = repo.getLoggedUser();
@@ -30,26 +29,19 @@ public class UnassignPackage extends BaseCommand {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
         }
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        int truckId = Parsers.parseToInteger("Truck id", parameters.get(0));
+        Truck truck = repo.findElementById(repo.getTrucks(),truckId);
 
-        int pkgId = Parsers.parseToInteger("Package id", parameters.get(0));
-        Package pkg = repo.findElementById(repo.getPackages(), pkgId);
-
-        return unassignPackage(pkg);
+        return showTruck(truck);
     }
 
-    private String unassignPackage(Package pkg) {
-        if (!pkg.isAssigned()) {
-            return String.format(Constants.PACKAGE_IS_NOT_ASSIGNED_MESSAGE, pkg.getId());
-        }
-
-        Truck truck = repo.findElementById(repo.getTrucks(), pkg.getAssignedTruck().getId());
-        repo.unassignPackageFromTruck(pkg, truck);
-
-        return String.format(Constants.PACKAGE_SUCCESSFULLY_UNASSIGNED_MESSAGE, pkg.getId());
+    private String showTruck(Truck truck){
+        return truck.toString();
     }
 
     @Override
     protected boolean requiresLogin() {
         return true;
     }
+
 }

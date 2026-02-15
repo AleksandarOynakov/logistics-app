@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Login extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private final Repository repo = getRepository();
 
     public Login(Repository repository) {
         super(repository);
@@ -19,8 +20,8 @@ public class Login extends BaseCommand {
     //EXPECTED STRING USERNAME AND STRING PASSWORD
     @Override
     protected String executeCommand(List<String> parameters) {
-        if (getRepository().hasLoggedUser()) {
-            return String.format(Constants.USER_LOGGED_IN_ALREADY, getRepository().getLoggedUser().getUsername());
+        if (repo.hasLoggedUser()) {
+            return String.format(Constants.USER_LOGGED_IN_ALREADY, repo.getLoggedUser().getUsername());
         }
 
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
@@ -32,7 +33,6 @@ public class Login extends BaseCommand {
     }
 
     private String login(String username, String password) {
-        Repository repo = getRepository();
         User user = repo.findUserByUsername(username);
 
         if (!user.getPassword().equals(password)) {

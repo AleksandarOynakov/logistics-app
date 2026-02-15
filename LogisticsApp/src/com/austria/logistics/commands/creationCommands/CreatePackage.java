@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CreatePackage extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
-
+    private final Repository repo = getRepository();
     public CreatePackage(Repository repository) {
         super(repository);
     }
@@ -35,7 +35,7 @@ public class CreatePackage extends BaseCommand {
     }
 
     private String createPackage(CityName startLocation, CityName endLocation, int weight, String contactInfo) {
-        int id = getRepository().createPackage(startLocation, endLocation, weight, contactInfo).getId();
+        int id = repo.createPackage(startLocation, endLocation, weight, contactInfo).getId();
 
         return String.format(Constants.PACKAGE_CREATED_MESSAGE, id);
     }

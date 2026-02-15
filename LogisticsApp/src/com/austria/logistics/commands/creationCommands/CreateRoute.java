@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CreateRoute extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
-
+    private final Repository repo = getRepository();
     public CreateRoute(Repository repository) {
         super(repository);
     }
@@ -19,7 +19,7 @@ public class CreateRoute extends BaseCommand {
     //NO ARGUMENTS ARE EXPECTED
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -29,7 +29,7 @@ public class CreateRoute extends BaseCommand {
     }
 
     private String createRoute() {
-        int id = getRepository().createRoute().getId();
+        int id = repo.createRoute().getId();
         return String.format(Constants.ROUTE_CREATED_MESSAGE, id);
     }
 

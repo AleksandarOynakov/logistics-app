@@ -14,6 +14,7 @@ import java.util.List;
 
 public class ShowRoute extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
+    private final Repository repo = getRepository();
 
     public ShowRoute(Repository repository) {
         super(repository);
@@ -22,7 +23,7 @@ public class ShowRoute extends BaseCommand {
     //EXPECTED STRING ROUTE ID
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -30,7 +31,7 @@ public class ShowRoute extends BaseCommand {
 
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         int id = Parsers.parseToInteger("Route id", parameters.get(0));
-        Route route = getRepository().findElementById(getRepository().getRoutes(), id);
+        Route route = repo.findElementById(repo.getRoutes(), id);
 
         return showRoute(route);
     }

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class AssignTruck extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private final Repository repo = getRepository();
 
     public AssignTruck(Repository repository) {
         super(repository);
@@ -24,7 +25,7 @@ public class AssignTruck extends BaseCommand {
     //EXPECTED ARGUMENTS ARE STRING ROUTEID AND STRING TRUCKTYPE
     @Override
     public String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
@@ -32,7 +33,7 @@ public class AssignTruck extends BaseCommand {
 
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         int id = Parsers.parseToInteger("Route id", parameters.get(0));
-        Route route = getRepository().findElementById(getRepository().getRoutes(), id);
+        Route route = repo.findElementById(repo.getRoutes(), id);
         TruckType truck = Parsers.parseTruck(parameters.get(1));
 
         return assignTruck(route, truck);

@@ -10,6 +10,8 @@ import com.austria.logistics.models.enums.UserRole;
 import java.util.List;
 
 public class ShowUsers extends BaseCommand {
+    private final Repository repo = getRepository();
+
     public ShowUsers(Repository repository) {
         super(repository);
     }
@@ -17,7 +19,7 @@ public class ShowUsers extends BaseCommand {
     //NO ARGUMENTS ARE EXPECTED
     @Override
     protected String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
+        User loggedUser = repo.getLoggedUser();
 
         if(loggedUser.getUserRole() != UserRole.MANAGER){
             throw new NotLoggedInException(Constants.USER_NOT_MANAGER);
@@ -28,7 +30,6 @@ public class ShowUsers extends BaseCommand {
 
     private String showUsers(){
         StringBuilder output = new StringBuilder();
-        Repository repo = getRepository();
         repo.getUsers().forEach(user -> output.append(user.toString()).append(System.lineSeparator()));
         return output.toString();
     }
