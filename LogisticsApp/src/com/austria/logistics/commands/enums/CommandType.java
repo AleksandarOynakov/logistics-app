@@ -9,6 +9,7 @@ public enum CommandType {
     SHOWPACKAGES,
     SHOWPACKAGE,
     SHOWROUTE,
+    SHOWROUTES,
     SHOWTRUCKS,
     SHOWUSERS,
     UNASSIGNTRUCK,
