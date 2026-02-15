@@ -21,6 +21,7 @@ public class Constants {
     public static final String ROUTE_ALREADY_HAVE_ASSIGNED_TRUCK_MESSAGE = "Route with id %d is already has assigned truck!";
     public static final String ROUTE_NOT_CREATED_YET_MESSAGE = "No routes are created yet!";
     public static final String ROUTE_SUCCESSFULLY_DELETED_MESSAGE = "Route with id %d was successfully deleted!";
+    public static final String ROUTE_DELETION_FAILED_TRUCK_ASSIGNED_MESSAGE = "Route cannot be delete while it has assigned truck to it!";
 
     public static final String INVALID_WEIGHT_VALUE_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String INVALID_VALUE_FORMAT_MESSAGE = "%s has to be valid integer.";
@@ -36,6 +37,8 @@ public class Constants {
     public static final String PACKAGE_ALREADY_ASSIGNED_ERROR_MESSAGE = "Package with id %d is already assigned to truck %s with id %d";
     public static final String PACKAGE_IS_NOT_ASSIGNED_MESSAGE = "Package with id %d is not assigned to any truck yet!";
     public static final String PACKAGE_SUCCESSFULLY_UNASSIGNED_MESSAGE = "Package with id %d is successfully unassigned!";
+    public static final String PACKAGE_SUCCESSFULLY_DELETED_MESSAGE = "Package with id %d was successfully deleted!";
+    public static final String PACKAGE_DELETION_FAILED_ASSIGNED_TO_TRUCK_MESSAGE = "Package cannot be delete while it is assigned to truck!";
 
     public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";
     public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck type.";

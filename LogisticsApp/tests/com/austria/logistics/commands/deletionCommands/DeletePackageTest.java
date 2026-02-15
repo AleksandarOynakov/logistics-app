@@ -1,8 +1,10 @@
 package com.austria.logistics.commands.deletionCommands;
 
 import com.austria.logistics.commands.assignCommands.AssignLocation;
+import com.austria.logistics.commands.assignCommands.AssignPackage;
 import com.austria.logistics.commands.assignCommands.AssignTruck;
 import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
@@ -17,29 +19,35 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class DeleteRouteTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class DeletePackageTest {
     private Repository repository;
+    private Command createPackage;
+    private Command deletePackage;
     private Command createRoute;
-    private Command deleteRoute;
     private Command assignTruck;
     private Command assignLocation;
+    private Command assignPackage;
 
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
         repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE));
+        createPackage = new CreatePackage(repository);
+        deletePackage = new DeletePackage(repository);
         createRoute = new CreateRoute(repository);
-        deleteRoute = new DeleteRoute(repository);
         assignTruck = new AssignTruck(repository);
         assignLocation = new AssignLocation(repository);
+        assignPackage = new AssignPackage(repository);
     }
 
     @Test
-    void executeCommand_Should_Throw_Error_When_Not_LoggedIn() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertThrows(NotLoggedInException.class, () -> deleteRoute.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> deletePackage.execute(List.of()));
     }
 
     @Test
@@ -48,40 +56,39 @@ class DeleteRouteTest {
         repository.logout();
         repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER));
         //Act,Assert
-        Assertions.assertThrows(NotLoggedInException.class, () -> deleteRoute.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> deletePackage.execute(List.of()));
     }
 
     @Test
-    void executeCommand_Should_Throw_Error_When_RouteId_NotFound() {
+    void executeCommand_Should_Throw_Error_When_Package_NotFound(){
         //Act,Assert
-        Assertions.assertThrows(ElementNotFoundException.class, () -> deleteRoute.execute(List.of("1")));
+        Assertions.assertThrows(ElementNotFoundException.class, () -> deletePackage.execute(List.of("99")));
     }
 
     @Test
-    void executeCommand_Should_Throw_Error_When_Route_Has_AssignedTruck() {
-        //Arrange
+    void executeCommand_Should_Throw_Error_When_Package_Assigned(){
         createRoute.execute(List.of());
         assignLocation.execute(List.of("1", "Sydney", "Feb","20", "13:00"));
         assignLocation.execute(List.of("1", "Darwin"));
         assignTruck.execute(List.of("1", "Man"));
+        createPackage.execute(List.of("Sydney","Darwin","30","test@test.bg"));
+        assignPackage.execute(List.of("2","1011"));
         //Act,Assert
-        Assertions.assertThrows(CannotDeleteException.class, () -> deleteRoute.execute(List.of("1")));
+        Assertions.assertThrows(CannotDeleteException.class, () -> deletePackage.execute(List.of("2")));
     }
-
 
     @Test
-    void executeCommand_Should_Delete_Route() {
+    void executeCommand_Should_Delete_Package(){
         //Arrange
-        createRoute.execute(List.of());
-        createRoute.execute(List.of());
+        createPackage.execute(List.of("Sydney","Darwin","30","test@test.bg"));
         //Act
-        String result = deleteRoute.execute(List.of("2"));
-        // Assert
+        String result = deletePackage.execute(List.of("1"));
+        //Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals(1, repository.getRoutes().size()),
-                () -> Assertions.assertEquals(1, repository.getRoutes().get(0).getId()),
-                () -> Assertions.assertEquals("Route with id 2 was successfully deleted!", result)
+                () -> Assertions.assertEquals(0,repository.getRoutes().size()),
+                () -> Assertions.assertEquals("Package with id 1 was successfully deleted!", result)
         );
     }
+
 
 }

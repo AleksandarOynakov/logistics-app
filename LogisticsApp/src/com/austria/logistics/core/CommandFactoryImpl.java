@@ -6,6 +6,7 @@ import com.austria.logistics.commands.assignCommands.AssignTruck;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
+import com.austria.logistics.commands.deletionCommands.DeletePackage;
 import com.austria.logistics.commands.deletionCommands.DeleteRoute;
 import com.austria.logistics.commands.enums.CommandType;
 import com.austria.logistics.commands.persistenceCommands.Load;
@@ -64,6 +65,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new UnassignLocation(repository);
             case DELETEROUTE:
                 return new DeleteRoute(repository);
+            case DELETEPACKAGE:
+                return new DeletePackage(repository);
             case LOGIN:
                 return new Login(repository);
             case LOGOUT:

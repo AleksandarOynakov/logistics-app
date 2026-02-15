@@ -23,6 +23,7 @@ public interface Repository {
     Truck assignPackageToTruck(Package pkg, Truck truck);
     void unassignPackageFromTruck(Package pkg, Truck truck);
     Package createPackage(CityName startLocation, CityName endLocation, int weight, String contactInformation);
+    void deletePackage(int pkgId);
     User addUser(User userToAdd);
     User getLoggedUser();
     boolean hasLoggedUser();

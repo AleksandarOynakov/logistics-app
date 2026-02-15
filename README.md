@@ -91,6 +91,15 @@ CreateRoute
 No arguments required.
 
 ---
+## Deletion
+
+### `DeleteRoute`
+Deletes route
+```
+ DeleteRoute <RouteId> 
+```
+
+---
 
 ## Assignment
 
@@ -295,6 +304,7 @@ Can execute all operational logistics commands, including:
 - `UnassignLocation`
 - `UnassignTruck`
 - `UnassignPackage`
+- `DeleteRoute`
 - `ShowRoute`
 - `ShowRoutes`
 - `ShowPackage`

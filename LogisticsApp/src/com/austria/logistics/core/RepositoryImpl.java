@@ -91,6 +91,11 @@ public class RepositoryImpl implements Repository {
                 .filter(route -> route.getId() == routeId)
                 .findFirst()
                 .orElseThrow(() -> new ElementNotFoundException(String.format(Constants.ELEMENT_NOT_FOUND_MESSAGE, routeId)));
+
+        if(routeToRemove.hasAssignedTruck()){
+            throw new CannotDeleteException(Constants.ROUTE_DELETION_FAILED_TRUCK_ASSIGNED_MESSAGE);
+        }
+
         this.routes.remove(routeToRemove);
     }
 
@@ -174,6 +179,18 @@ public class RepositoryImpl implements Repository {
         Package pkg = new PackageImpl(++this.nextId, startLocation, endLocation, weight, contactInformation);
         this.packages.add(pkg);
         return pkg;
+    }
+
+    @Override
+    public void deletePackage(int pkgId) {
+        Package pkpToRemove = this.packages.stream().filter(aPackage -> aPackage.getId() == pkgId)
+                .findFirst()
+                .orElseThrow(() -> new ElementNotFoundException(String.format(Constants.ELEMENT_NOT_FOUND_MESSAGE, pkgId)));
+        if(pkpToRemove.isAssigned()){
+            throw new CannotDeleteException(Constants.PACKAGE_DELETION_FAILED_ASSIGNED_TO_TRUCK_MESSAGE);
+        }
+
+        this.packages.remove(pkpToRemove);
     }
 
     @Override
