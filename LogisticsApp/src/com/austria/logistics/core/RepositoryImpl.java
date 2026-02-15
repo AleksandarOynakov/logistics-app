@@ -86,6 +86,15 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public void deleteRoute(int routeId) {
+        Route routeToRemove = this.routes.stream()
+                .filter(route -> route.getId() == routeId)
+                .findFirst()
+                .orElseThrow(() -> new ElementNotFoundException(String.format(Constants.ELEMENT_NOT_FOUND_MESSAGE, routeId)));
+        this.routes.remove(routeToRemove);
+    }
+
+    @Override
     public Route assignTruckToRoute(Truck truck, Route route) {
         if (route.getRouteLocations().size() < 2) {
             throw new RouteIsEmptyException(String.format(Constants.ROUTE_ASSIGN_ERROR_MESSAGE, route.getId()));
@@ -145,7 +154,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void unassignPackageFromTruck(Package pkg, Truck truck) {
-        if(truck.getAssignedPackagesIdList().contains(pkg.getId())){
+        if (truck.getAssignedPackagesIdList().contains(pkg.getId())) {
             truck.removeAssignedPackageId(pkg.getId());
             truck.removeLoad(pkg.getWeight());
             pkg.unassign();
@@ -228,7 +237,7 @@ public class RepositoryImpl implements Repository {
             Files.write(Constants.FILE_PATH_USERS, Parsers.parseCollectionToStringList(this.users));
 
         } catch (IOException e) {
-           throw new FailedToSaveToFileException(Constants.STATE_FAILED_TO_SAVE);
+            throw new FailedToSaveToFileException(Constants.STATE_FAILED_TO_SAVE);
         }
         return Constants.STATE_SAVED_TO_FILE;
     }

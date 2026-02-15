@@ -17,6 +17,7 @@ public interface Repository {
     <E extends Identifiable> E findElementById(List<E> elements, int id);
 
     Route createRoute();
+    void deleteRoute(int routeId);
     Route assignTruckToRoute(Truck truck, Route route);
     void unassignTruckFromRoute(Truck truck, Route route);
     Truck assignPackageToTruck(Package pkg, Truck truck);

@@ -16,6 +16,7 @@ public enum CommandType {
     UNASSIGNTRUCK,
     UNASSIGNPACKAGE,
     UNASSIGNLOCATION,
+    DELETEROUTE,
     LOGIN,
     LOGOUT,
     READMAIL,

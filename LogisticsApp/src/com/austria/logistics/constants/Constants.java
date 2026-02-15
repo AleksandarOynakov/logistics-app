@@ -20,6 +20,7 @@ public class Constants {
     public static final String ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE = "You cannot remove the starting location in the route, before every other location is removed!";
     public static final String ROUTE_ALREADY_HAVE_ASSIGNED_TRUCK_MESSAGE = "Route with id %d is already has assigned truck!";
     public static final String ROUTE_NOT_CREATED_YET_MESSAGE = "No routes are created yet!";
+    public static final String ROUTE_SUCCESSFULLY_DELETED_MESSAGE = "Route with id %d was successfully deleted!";
 
     public static final String INVALID_WEIGHT_VALUE_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String INVALID_VALUE_FORMAT_MESSAGE = "%s has to be valid integer.";
