@@ -173,6 +173,10 @@ UnassignPackage <PackageId>
 ```
 ShowRoute <RouteId>
 ```
+### `ShowRoutes`
+```
+ShowRoutes
+```
 
 ### `ShowPackage`
 ```
@@ -287,6 +291,7 @@ Can execute all operational logistics commands, including:
 - `UnassignTruck`
 - `UnassignPackage`
 - `ShowRoute`
+- `ShowRoutes`
 - `ShowPackage`
 - `ShowPackages`
 - `ShowTrucks`
@@ -391,6 +396,9 @@ Load
 Login john 123456
 ReadMail
 Logout
+Login emp1 emp123
+ShowRoutes
+Exit
 ```
 
 ---
@@ -532,4 +540,11 @@ MESSAGE#2 - Package with id 2, start location Sydney, end location Melbourne, we
 ####################
 You logged out!
 ####################
+User emp1 successfully logged in!
+####################
+Current schedule for route with id 3:
+No assigned truck to the route.
+City: Melbourne, Scheduled time: Feb 24 16:00
+####################
+Process finished with exit code 0
 ```
