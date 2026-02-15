@@ -237,7 +237,6 @@ Save
 ```
 
 **Description:**
-- Serializes the current application state.
 - Automatically creates the `saves/` directory if it does not exist.
 - Stores all routes, packages, trucks, and users in separate files.
 - Enables restoring the system state later.
