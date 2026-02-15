@@ -1,13 +1,14 @@
 package com.austria.logistics.models.vehicles.contracts;
 
 import com.austria.logistics.models.contracts.Identifiable;
+import com.austria.logistics.models.contracts.Printable;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.Savealbe;
 import com.austria.logistics.models.enums.TruckType;
 
 import java.util.List;
 
-public interface Truck extends Identifiable, Savealbe  {
+public interface Truck extends Identifiable, Savealbe, Printable {
     TruckType getTruckType();
     boolean isAssigned();
     int getCurrentWeight();

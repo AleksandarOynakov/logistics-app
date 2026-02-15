@@ -49,6 +49,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowRoute(repository);
             case SHOWROUTES:
                 return new ShowRoutes(repository);
+            case SHOWTRUCK:
+                return new ShowTruck(repository);
             case SHOWTRUCKS:
                 return new ShowTrucks(repository);
             case SHOWUSERS:

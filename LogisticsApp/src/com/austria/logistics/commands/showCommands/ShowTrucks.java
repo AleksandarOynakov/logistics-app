@@ -33,19 +33,7 @@ public class ShowTrucks extends BaseCommand {
         StringBuilder output = new StringBuilder();
         List<Truck> trucks = repo.getTrucks();
 
-        trucks.forEach(truck -> {
-            output.append(truck.getTruckType().getDisplayName())
-                    .append(String.format(" with id %d",truck.getId()));
-
-            if (truck.isAssigned()) {
-                output.append(String.format(" is assigned to route with id %d, ", truck.getAssignedRoute().getId()))
-                        .append(String.format("current weight is %d kg and max capacity is %d kg", truck.getCurrentWeight(), truck.getMaxCapacity()));
-
-            } else {
-                output.append(" is not assigned.");
-            }
-            output.append("\n");
-        });
+        trucks.forEach(truck -> output.append(truck.toString()));
 
         return output.toString();
     }

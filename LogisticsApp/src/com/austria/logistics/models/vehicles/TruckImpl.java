@@ -16,7 +16,7 @@ public class TruckImpl implements Truck {
     private Route assignedRoute;
     private int currentLoad;
 
-    public TruckImpl(int id, TruckType truckType){
+    public TruckImpl(int id, TruckType truckType) {
         this.id = id;
         this.truckType = truckType;
         this.isAssigned = false;
@@ -51,7 +51,7 @@ public class TruckImpl implements Truck {
 
     @Override
     public Route getAssignedRoute() {
-       return this.assignedRoute;
+        return this.assignedRoute;
     }
 
     @Override
@@ -65,7 +65,9 @@ public class TruckImpl implements Truck {
     }
 
     @Override
-    public void removeAssignedPackageId(int id) { this.assignedPackagesIdList.remove(Integer.valueOf(id)); }
+    public void removeAssignedPackageId(int id) {
+        this.assignedPackagesIdList.remove(Integer.valueOf(id));
+    }
 
     @Override
     public void addLoad(int weight) {
@@ -73,7 +75,9 @@ public class TruckImpl implements Truck {
     }
 
     @Override
-    public void removeLoad(int weight) { this.currentLoad -= weight; }
+    public void removeLoad(int weight) {
+        this.currentLoad -= weight;
+    }
 
     @Override
     public void setAssignedRoute(Route assignedRoute) {
@@ -87,9 +91,27 @@ public class TruckImpl implements Truck {
 
     @Override
     public void unassign() {
-        this.isAssigned =  false;
+        this.isAssigned = false;
         this.assignedRoute = null;
         this.currentLoad = 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+
+        output.append(this.getTruckType().getDisplayName())
+                .append(String.format(" with id %d", this.getId()));
+
+        if (this.isAssigned()) {
+            output.append(String.format(" is assigned to route with id %d, ", this.getAssignedRoute().getId()))
+                    .append(String.format("current weight is %d kg and max capacity is %d kg", this.currentLoad, this.getMaxCapacity()));
+        } else {
+            output.append(" is not assigned.");
+        }
+        output.append("\n");
+
+        return output.toString();
     }
 
     @Override
@@ -97,11 +119,11 @@ public class TruckImpl implements Truck {
         return String.join("|",
                 String.valueOf(id),
                 truckType.getDisplayName(),
-               assignedPackagesIdList.isEmpty()? "NONE" : assignedPackagesIdList.stream()
+                assignedPackagesIdList.isEmpty() ? "NONE" : assignedPackagesIdList.stream()
                         .map(String::valueOf)
                         .collect(Collectors.joining(",")),
                 String.valueOf(isAssigned),
-                assignedRoute == null? "NONE" : String.valueOf(assignedRoute.getId()),
+                assignedRoute == null ? "NONE" : String.valueOf(assignedRoute.getId()),
                 String.valueOf(currentLoad));
     }
 }
